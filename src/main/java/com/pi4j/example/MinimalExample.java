@@ -33,6 +33,8 @@ import com.pi4j.io.gpio.digital.DigitalInput;
 import com.pi4j.io.gpio.digital.DigitalOutput;
 import com.pi4j.io.gpio.digital.DigitalState;
 import com.pi4j.io.gpio.digital.PullResistance;
+import com.pi4j.io.spi.Spi;
+import com.pi4j.io.spi.SpiMode;
 import com.pi4j.util.Console;
 
 /**
@@ -103,23 +105,52 @@ public class MinimalExample {
         PrintInfo.printDefaultPlatform(console, pi4j);
         PrintInfo.printProviders(console, pi4j);
 
-        var valueConfig = DigitalInput.newConfigBuilder(pi4j)
-                .id("button")
-                .name("Press button")
+        var imput4Conf = DigitalInput.newConfigBuilder(pi4j)
+                .id("4")
+                .name("4")
                 .address(4)
                 .provider("pigpio-digital-input");
-        var value = pi4j.create(valueConfig);
-        value.addListener(e -> {
-                console.println("Value : " + e.state().getValue());
-        });
+
+        var imput4 = pi4j.create(imput4Conf);
+
+        var imput7Conf = DigitalInput.newConfigBuilder(pi4j)
+                .id("7")
+                .name("7")
+                .address(4)
+                .provider("pigpio-digital-input");
+
+        var imput7 = pi4j.create(imput7Conf);
+
+        var spi10Conf = Spi
+                .newConfigBuilder(pi4j)
+                .id("10")
+                .name("10")
+                .address(10)
+                .mode(SpiMode.MODE_0)
+                .baud(Spi.DEFAULT_BAUD);
+
+        var spi10 = pi4j.create(spi10Conf);
+
+        var spi12Conf = Spi
+                .newConfigBuilder(pi4j)
+                .id("12")
+                .name("12")
+                .address(12)
+                .mode(SpiMode.MODE_0)
+                .baud(Spi.DEFAULT_BAUD);
+
+        var spi12 = pi4j.create(spi12Conf);
+
 
 
         // OPTIONAL: print the registry
         PrintInfo.printRegistry(console, pi4j);
 
         while (pressCount < 5) {
-                console.println("VALEUR in LOOP : " + value.state());
-                console.println("VALEUR in LOOP : " + value.state().getValue());
+                console.println("VALEUR PIN 4 : " + imput4.state().getValue());
+                console.println("VALEUR PIN 7 : " + imput7.state().getValue());
+                console.println("VALEUR PIN 10 : " + spi10.read());
+                console.println("VALEUR PIN 12 : " + spi12.read());
 //            if (led.equals(DigitalState.HIGH)) {
 //                console.println("LED low");
 //                led.low();
