@@ -118,6 +118,7 @@ public class MinimalExample {
         PrintInfo.printRegistry(console, pi4j);
 
         while (pressCount < 5) {
+                console.println("VALEUR in LOOP : " + value.state());
                 console.println("VALEUR in LOOP : " + value.state().getValue());
 //            if (led.equals(DigitalState.HIGH)) {
 //                console.println("LED low");
