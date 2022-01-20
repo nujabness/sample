@@ -154,22 +154,10 @@ public class MinimalExample {
         // OPTIONAL: print the registry
         PrintInfo.printRegistry(console, pi4j);
 
-        while (pressCount < 5) {
-                console.println("VALEUR PIN 4 : " + imput4.state().getValue());
-                console.println("VALEUR PIN 14 : " + imput14.state().getValue());
-                console.println("VALEUR PIN 7 : " + imput7.state().getValue());
-                console.println("VALEUR PIN 10 : " + spi10.read());
-//                console.println("VALEUR PIN 12 : " + spi12.read());
-//            if (led.equals(DigitalState.HIGH)) {
-//                console.println("LED low");
-//                led.low();
-//            } else {
-//                console.println("LED high");
-//                led.high();
-//            }
-            pressCount++;
-            Thread.sleep(500 / (pressCount + 1));
-        }
+        console.println("VALEUR PIN 4 : " + imput4.state().getValue());
+        console.println("VALEUR PIN 14 : " + imput14.state().getValue());
+        console.println("VALEUR PIN 7 : " + imput7.state().getValue());
+        console.println("VALEUR PIN 10 : " + spi10.read());
 
         // ------------------------------------------------------------
         // Terminate the Pi4J library
