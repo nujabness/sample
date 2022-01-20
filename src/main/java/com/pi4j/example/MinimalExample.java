@@ -103,23 +103,14 @@ public class MinimalExample {
         PrintInfo.printDefaultPlatform(console, pi4j);
         PrintInfo.printProviders(console, pi4j);
 
-           double value = pi4j.analogInput().create(4).value();
-
-
-
-        var buttonConfig = DigitalInput.newConfigBuilder(pi4j)
+        var valueConfig = DigitalInput.newConfigBuilder(pi4j)
                 .id("button")
                 .name("Press button")
-                .address(PIN_BUTTON)
-                .pull(PullResistance.PULL_DOWN)
-                .debounce(3000L)
+                .address(4)
                 .provider("pigpio-digital-input");
-        var button = pi4j.create(buttonConfig);
-        button.addListener(e -> {
-            if (e.state() == DigitalState.LOW) {
-                pressCount++;
-                console.println("Button was pressed for the " + pressCount + "th time");
-            }
+        var value = pi4j.create(valueConfig);
+        value.addListener(e -> {
+                console.println("Value : " + e.state().getValue());
         });
 
 
@@ -127,7 +118,7 @@ public class MinimalExample {
         PrintInfo.printRegistry(console, pi4j);
 
         while (pressCount < 5) {
-                console.println("VALEUR : " + value);
+                console.println("VALEUR in LOOP : " + value.state().getValue());
 //            if (led.equals(DigitalState.HIGH)) {
 //                console.println("LED low");
 //                led.low();
