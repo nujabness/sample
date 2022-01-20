@@ -113,6 +113,14 @@ public class MinimalExample {
 
         var imput4 = pi4j.create(imput4Conf);
 
+        var imput14Conf = DigitalInput.newConfigBuilder(pi4j)
+                .id("I 14")
+                .name("I14")
+                .address(14)
+                .provider("pigpio-digital-input");
+
+        var imput14 = pi4j.create(imput14Conf);
+
         var imput7Conf = DigitalInput.newConfigBuilder(pi4j)
                 .id("I 7")
                 .name("I7")
@@ -131,15 +139,15 @@ public class MinimalExample {
 
         var spi10 = pi4j.create(spi10Conf);
 
-        var spi12Conf = Spi
-                .newConfigBuilder(pi4j)
-                .id("SPI 12")
-                .name("SPI12")
-                .address(12)
-                .mode(SpiMode.MODE_0)
-                .baud(Spi.DEFAULT_BAUD);
-
-        var spi12 = pi4j.create(spi12Conf);
+//        var spi12Conf = Spi
+//                .newConfigBuilder(pi4j)
+//                .id("SPI 12")
+//                .name("SPI12")
+//                .address(12)
+//                .mode(SpiMode.MODE_0)
+//                .baud(Spi.DEFAULT_BAUD);
+//
+//        var spi12 = pi4j.create(spi12Conf);
 
 
 
@@ -148,6 +156,7 @@ public class MinimalExample {
 
         while (pressCount < 5) {
                 console.println("VALEUR PIN 4 : " + imput4.state().getValue());
+                console.println("VALEUR PIN 14 : " + imput14.state().getValue());
                 console.println("VALEUR PIN 7 : " + imput7.state().getValue());
                 console.println("VALEUR PIN 10 : " + spi10.read());
                 console.println("VALEUR PIN 12 : " + spi12.read());
