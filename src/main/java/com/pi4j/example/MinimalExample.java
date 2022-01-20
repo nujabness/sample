@@ -103,25 +103,8 @@ public class MinimalExample {
         PrintInfo.printDefaultPlatform(console, pi4j);
         PrintInfo.printProviders(console, pi4j);
 
-        // Here we will create I/O interfaces for a (GPIO) digital output
-        // and input pin. We define the 'provider' to use PiGpio to control
-        // the GPIO.
-        var ledConfig = DigitalOutput.newConfigBuilder(pi4j)
-                .id("led")
-                .name("LED Flasher")
-                .address(PIN_LED)
-                .shutdown(DigitalState.LOW)
-                .initial(DigitalState.LOW)
-                .provider("pigpio-digital-output");
-        var led = pi4j.create(ledConfig);
+           double value = pi4j.analogInput().create(4).value();
 
-        var sensorConfig = AnalogInput.newConfigBuilder(pi4j)
-                .id("sensor")
-                .name("SENSOR moisture")
-                .address(4)
-                .min(0)
-                .max(100);
-        var sensor = pi4j.create(sensorConfig);
 
 
         var buttonConfig = DigitalInput.newConfigBuilder(pi4j)
@@ -144,7 +127,7 @@ public class MinimalExample {
         PrintInfo.printRegistry(console, pi4j);
 
         while (pressCount < 5) {
-                console.println("VALEUR : " + sensor.getValue());
+                console.println("VALEUR : " + value);
 //            if (led.equals(DigitalState.HIGH)) {
 //                console.println("LED low");
 //                led.low();
