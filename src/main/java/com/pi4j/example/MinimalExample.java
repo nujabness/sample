@@ -3,6 +3,9 @@ package com.pi4j.example;
 import com.pi4j.Pi4J;
 import com.pi4j.util.Console;
 
+import java.net.URL;
+import java.net.URLClassLoader;
+
 /**
  * <p>AnalogInputExample class.</p>
  *
@@ -27,6 +30,14 @@ public class MinimalExample {
      * @throws java.lang.Exception if any.
      */
     public static void main(String[] args) throws Exception {
+
+        ClassLoader cl = ClassLoader.getSystemClassLoader();
+
+        URL[] urls = ((URLClassLoader)cl).getURLs();
+
+        for(URL url: urls){
+            System.out.println(url.getFile());
+        }
 
         // create Pi4J console wrapper/helper
         // (This is a utility class to abstract some of the boilerplate stdin/stdout code)
