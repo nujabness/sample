@@ -140,7 +140,7 @@ public class MinimalExample {
                 .newConfigBuilder(pi4j)
                 .id("SPI 10")
                 .name("SPI10")
-                .address(12)
+                .address(17)
                 .mode(SpiMode.MODE_0)
                 .baud(Spi.DEFAULT_BAUD);
 
@@ -165,7 +165,7 @@ public class MinimalExample {
         console.println("VALEUR PIN 7 : " + imput7.state().getValue());
         console.println("VALEUR PIN 18 : " + imput18.state().getValue());
         console.println("VALEUR PIN 1 : " + imput1.state().getValue());
-        console.println("VALEUR PIN 10 : " + spi10.read());
+        console.println("VALEUR SPI : " + spi10.read());
 
         // ------------------------------------------------------------
         // Terminate the Pi4J library
