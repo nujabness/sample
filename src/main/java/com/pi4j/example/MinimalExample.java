@@ -106,25 +106,25 @@ public class MinimalExample {
         PrintInfo.printProviders(console, pi4j);
 
         var imput4Conf = DigitalInput.newConfigBuilder(pi4j)
-                .id("4")
-                .name("4")
+                .id("I 4")
+                .name("I4")
                 .address(4)
                 .provider("pigpio-digital-input");
 
         var imput4 = pi4j.create(imput4Conf);
 
         var imput7Conf = DigitalInput.newConfigBuilder(pi4j)
-                .id("7")
-                .name("7")
-                .address(4)
+                .id("I 7")
+                .name("I7")
+                .address(7)
                 .provider("pigpio-digital-input");
 
         var imput7 = pi4j.create(imput7Conf);
 
         var spi10Conf = Spi
                 .newConfigBuilder(pi4j)
-                .id("10")
-                .name("10")
+                .id("SPI 10")
+                .name("SPI10")
                 .address(10)
                 .mode(SpiMode.MODE_0)
                 .baud(Spi.DEFAULT_BAUD);
@@ -133,8 +133,8 @@ public class MinimalExample {
 
         var spi12Conf = Spi
                 .newConfigBuilder(pi4j)
-                .id("12")
-                .name("12")
+                .id("SPI 12")
+                .name("SPI12")
                 .address(12)
                 .mode(SpiMode.MODE_0)
                 .baud(Spi.DEFAULT_BAUD);
