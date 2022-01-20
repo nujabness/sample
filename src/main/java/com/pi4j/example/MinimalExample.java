@@ -127,6 +127,7 @@ public class MinimalExample {
 //                console.println("LED high");
 //                led.high();
 //            }
+            pressCount++;
             Thread.sleep(500 / (pressCount + 1));
         }
 
