@@ -106,7 +106,7 @@ public class MinimalExample {
         var valueConfig = DigitalInput.newConfigBuilder(pi4j)
                 .id("button")
                 .name("Press button")
-                .address(7)
+                .address(4)
                 .provider("pigpio-digital-input");
         var value = pi4j.create(valueConfig);
         value.addListener(e -> {
