@@ -112,25 +112,12 @@ public class MinimalExample {
                 .provider("pigpio-digital-input");
 
         var imput = pi4j.create(imputConf);
-
-
-
-//        var spi12Conf = Spi
-//                .newConfigBuilder(pi4j)
-//                .id("SPI 12")
-//                .name("SPI12")
-//                .address(12)
-//                .mode(SpiMode.MODE_0)
-//                .baud(Spi.DEFAULT_BAUD);
-//
-//        var spi12 = pi4j.create(spi12Conf);
-
-
+        imput.addListener(e -> console.println(e.state().getValue()));
 
         // OPTIONAL: print the registry
         PrintInfo.printRegistry(console, pi4j);
 
-        console.println("VALEUR PIN : " + imput.state().getValue());
+//        console.println("VALEUR PIN : " + imput.state().getValue());
 //        console.println("VALEUR PIN 7 : " + imput7.state().getValue());
 //        console.println("VALEUR PIN 18 : " + imput18.state().getValue());
 //        console.println("VALEUR PIN 1 : " + imput1.state().getValue());
