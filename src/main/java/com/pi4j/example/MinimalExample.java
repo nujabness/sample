@@ -122,7 +122,9 @@ public class MinimalExample {
 //        console.println("VALEUR PIN 18 : " + imput18.state().getValue());
 //        console.println("VALEUR PIN 1 : " + imput1.state().getValue());
 //        console.println("VALEUR SPI : " + spi10.read());
+        while (true){
 
+        }
         // ------------------------------------------------------------
         // Terminate the Pi4J library
         // ------------------------------------------------------------
@@ -135,6 +137,6 @@ public class MinimalExample {
         // is returned to the system.
 
         // Shutdown Pi4J
-        pi4j.shutdown();
+        // pi4j.shutdown();
     }
 }
