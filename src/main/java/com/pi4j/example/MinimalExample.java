@@ -28,6 +28,7 @@ package com.pi4j.example;
  */
 
 import com.pi4j.Pi4J;
+import com.pi4j.io.gpio.analog.AnalogInput;
 import com.pi4j.io.gpio.digital.DigitalInput;
 import com.pi4j.io.gpio.digital.DigitalOutput;
 import com.pi4j.io.gpio.digital.DigitalState;
@@ -114,6 +115,15 @@ public class MinimalExample {
                 .provider("pigpio-digital-output");
         var led = pi4j.create(ledConfig);
 
+        var sensorConfig = AnalogInput.newConfigBuilder(pi4j)
+                .id("sensor")
+                .name("SENSOR moisture")
+                .address(4)
+                .min(0)
+                .max(100);
+        var sensor = pi4j.create(sensorConfig);
+
+
         var buttonConfig = DigitalInput.newConfigBuilder(pi4j)
                 .id("button")
                 .name("Press button")
@@ -129,17 +139,19 @@ public class MinimalExample {
             }
         });
 
+
         // OPTIONAL: print the registry
         PrintInfo.printRegistry(console, pi4j);
 
         while (pressCount < 5) {
-            if (led.equals(DigitalState.HIGH)) {
-                console.println("LED low");
-                led.low();
-            } else {
-                console.println("LED high");
-                led.high();
-            }
+                console.println("VALEUR : " + sensor.getValue());
+//            if (led.equals(DigitalState.HIGH)) {
+//                console.println("LED low");
+//                led.low();
+//            } else {
+//                console.println("LED high");
+//                led.high();
+//            }
             Thread.sleep(500 / (pressCount + 1));
         }
 
