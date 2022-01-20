@@ -133,7 +133,7 @@ public class MinimalExample {
                 .newConfigBuilder(pi4j)
                 .id("SPI 10")
                 .name("SPI10")
-                .address(10)
+                .address(12)
                 .mode(SpiMode.MODE_0)
                 .baud(Spi.DEFAULT_BAUD);
 
