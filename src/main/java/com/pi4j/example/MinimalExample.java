@@ -159,7 +159,7 @@ public class MinimalExample {
                 console.println("VALEUR PIN 14 : " + imput14.state().getValue());
                 console.println("VALEUR PIN 7 : " + imput7.state().getValue());
                 console.println("VALEUR PIN 10 : " + spi10.read());
-                console.println("VALEUR PIN 12 : " + spi12.read());
+//                console.println("VALEUR PIN 12 : " + spi12.read());
 //            if (led.equals(DigitalState.HIGH)) {
 //                console.println("LED low");
 //                led.low();
