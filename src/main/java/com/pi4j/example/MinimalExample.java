@@ -45,8 +45,8 @@ import java.nio.ByteBuffer;
  */
 public class MinimalExample {
 
-    private static final int SPI_CHANNEL = 10;
-    private static final int I2C_BUS = 27;
+    private static final int SPI_CHANNEL = 24;
+    private static final int I2C_BUS = 0;
     private static final int I2C_DEVICE = 0x04;
 
     /**
