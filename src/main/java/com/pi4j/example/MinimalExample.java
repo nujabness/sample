@@ -45,9 +45,9 @@ import java.nio.ByteBuffer;
  */
 public class MinimalExample {
 
-    private static final int SPI_CHANNEL = 0;
-    private static final int I2C_BUS = 2;
-    private static final int I2C_DEVICE = 0x04;
+    private static final int SPI_CHANNEL = 10;
+    private static final int I2C_BUS = 1;
+    private static final int I2C_DEVICE = 2;
 
     /**
      * This application blinks a led and counts the number the button is pressed. The blink speed increases with each
@@ -145,38 +145,38 @@ public class MinimalExample {
 
         }
 
-//        // create I2C config
-//        var configI2C = I2C.newConfigBuilder(pi4j)
-//                .id("my-i2c-bus")
-//                .name("My I2C Bus")
-//                .bus(I2C_BUS)
-//                .device(I2C_DEVICE)
-//                .build();
-//
-//        // get a serial I/O provider from the Pi4J context
-//        I2CProvider i2CProvider = pi4j.provider("pigpio-i2c");
-//
-//        // use try-with-resources to auto-close I2C when complete
-//        try (var i2c = i2CProvider.create(configI2C);) {
-//
-//            // we will be reading and writing to register address 0x01
-//            var register = i2c.register(2);
-//
-//
-//            // <-- read a single (8-bit) byte value from the I2C device register
-//            byte readByte = register.readByte();
-//
-//            console.println("I2C READ BYTE: 0x" + Integer.toHexString(Byte.toUnsignedInt(readByte)));
-//
-//            // <-- read a single (16-bit) word value from the I2C device register
-//            int readWord = register.readWord();
-//
-//            console.println("I2C READ WORD: 0x" + Integer.toHexString(readWord));
-//
-//            // <-- read ByteBuffer of specified length from the I2C device register
-//            ByteBuffer readBuffer = register.readByteBuffer(2);
-//
-//            console.println("I2C READ BUFFER: 0x" + StringUtil.toHexString(readBuffer));
-//        }
+        // create I2C config
+        var configI2C = I2C.newConfigBuilder(pi4j)
+                .id("my-i2c-bus")
+                .name("My I2C Bus")
+                .bus(I2C_BUS)
+                .device(I2C_DEVICE)
+                .build();
+
+        // get a serial I/O provider from the Pi4J context
+        I2CProvider i2CProvider = pi4j.provider("pigpio-i2c");
+
+        // use try-with-resources to auto-close I2C when complete
+        try (var i2c = i2CProvider.create(configI2C);) {
+
+            // we will be reading and writing to register address 0x01
+            var register = i2c.register(2);
+
+
+            // <-- read a single (8-bit) byte value from the I2C device register
+            byte readByte = register.readByte();
+
+            console.println("I2C READ BYTE: 0x" + Integer.toHexString(Byte.toUnsignedInt(readByte)));
+
+            // <-- read a single (16-bit) word value from the I2C device register
+            int readWord = register.readWord();
+
+            console.println("I2C READ WORD: 0x" + Integer.toHexString(readWord));
+
+            // <-- read ByteBuffer of specified length from the I2C device register
+            ByteBuffer readBuffer = register.readByteBuffer(2);
+
+            console.println("I2C READ BUFFER: 0x" + StringUtil.toHexString(readBuffer));
+        }
     }
 }
