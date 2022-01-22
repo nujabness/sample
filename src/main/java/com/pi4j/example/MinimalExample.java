@@ -121,6 +121,7 @@ public class MinimalExample {
         // use try-with-resources to auto-close SPI when complete
         try (var spi = spiProvider.create(config);) {
 
+
             // open SPI communications
             spi.open();
 
@@ -138,6 +139,8 @@ public class MinimalExample {
             console.println("SPI [READ] :");
             console.println("  [BYTES]  0x" + StringUtil.toHexString(buffer.array()));
             console.println("  [STRING] " + new String(buffer.array()));
+            console.println("--------------------------------------");
+            console.println(spi.read());
             console.println("--------------------------------------");
 
         }
@@ -157,7 +160,7 @@ public class MinimalExample {
         try (var i2c = i2CProvider.create(configI2C);) {
 
             // we will be reading and writing to register address 0x01
-            var register = i2c.register(0x01);
+            var register = i2c.register(2);
 
 
             // <-- read a single (8-bit) byte value from the I2C device register
