@@ -28,14 +28,14 @@ package com.pi4j.example;
  */
 
 import com.pi4j.Pi4J;
-import com.pi4j.io.gpio.analog.AnalogInput;
-import com.pi4j.io.gpio.digital.DigitalInput;
-import com.pi4j.io.gpio.digital.DigitalOutput;
-import com.pi4j.io.gpio.digital.DigitalState;
-import com.pi4j.io.gpio.digital.PullResistance;
+import com.pi4j.io.i2c.I2C;
+import com.pi4j.io.i2c.I2CProvider;
 import com.pi4j.io.spi.Spi;
-import com.pi4j.io.spi.SpiMode;
+import com.pi4j.io.spi.SpiProvider;
 import com.pi4j.util.Console;
+import com.pi4j.util.StringUtil;
+
+import java.nio.ByteBuffer;
 
 /**
  * <p>This example fully describes the base usage of Pi4J by providing extensive comments in each step.</p>
@@ -45,10 +45,9 @@ import com.pi4j.util.Console;
  */
 public class MinimalExample {
 
-    private static final int PIN_BUTTON = 24; // PIN 18 = BCM 24
-    private static final int PIN_LED = 22; // PIN 15 = BCM 22
-
-    private static int pressCount = 0;
+    private static final int SPI_CHANNEL = 0;
+    private static final int I2C_BUS = 1;
+    private static final int I2C_DEVICE = 0x04;
 
     /**
      * This application blinks a led and counts the number the button is pressed. The blink speed increases with each
@@ -105,38 +104,76 @@ public class MinimalExample {
         PrintInfo.printDefaultPlatform(console, pi4j);
         PrintInfo.printProviders(console, pi4j);
 
-        var imputConf = DigitalInput.newConfigBuilder(pi4j)
-                .id("I ")
-                .name("I")
-                .address(21)
-                .provider("pigpio-digital-input");
-
-        var imput = pi4j.create(imputConf);
-        imput.addListener(e -> console.println(e.state().getValue()));
-
         // OPTIONAL: print the registry
         PrintInfo.printRegistry(console, pi4j);
 
-//        console.println("VALEUR PIN : " + imput.state().getValue());
-//        console.println("VALEUR PIN 7 : " + imput7.state().getValue());
-//        console.println("VALEUR PIN 18 : " + imput18.state().getValue());
-//        console.println("VALEUR PIN 1 : " + imput1.state().getValue());
-//        console.println("VALEUR SPI : " + spi10.read());
-        while (true){
+
+        var config = Spi.newConfigBuilder(pi4j)
+                .id("my-spi-device")
+                .name("My SPI Device")
+                .address(SPI_CHANNEL)
+                .baud(Spi.DEFAULT_BAUD)
+                .build();
+
+        // get a SPI I/O provider from the Pi4J context
+        SpiProvider spiProvider = pi4j.provider("pigpio-spi");
+
+        // use try-with-resources to auto-close SPI when complete
+        try (var spi = spiProvider.create(config);) {
+
+            // open SPI communications
+            spi.open();
+
+            // write data to the SPI channel
+
+            // take a breath to allow time for the SPI
+            // data to get updated in the SPI device
+            Thread.sleep(100);
+
+            // read data back from the SPI channel
+            ByteBuffer buffer = spi.readByteBuffer(2);
+
+            console.println("--------------------------------------");
+            console.println("--------------------------------------");
+            console.println("SPI [READ] :");
+            console.println("  [BYTES]  0x" + StringUtil.toHexString(buffer.array()));
+            console.println("  [STRING] " + new String(buffer.array()));
+            console.println("--------------------------------------");
 
         }
-        // ------------------------------------------------------------
-        // Terminate the Pi4J library
-        // ------------------------------------------------------------
-        // We we are all done and want to exit our application, we must
-        // call the 'shutdown()' function on the Pi4J static helper class.
-        // This will ensure that all I/O instances are properly shutdown,
-        // released by the the system and shutdown in the appropriate
-        // manner. Terminate will also ensure that any background
-        // threads/processes are cleanly shutdown and any used memory
-        // is returned to the system.
 
-        // Shutdown Pi4J
-        // pi4j.shutdown();
+        // create I2C config
+        var configI2C = I2C.newConfigBuilder(pi4j)
+                .id("my-i2c-bus")
+                .name("My I2C Bus")
+                .bus(I2C_BUS)
+                .device(I2C_DEVICE)
+                .build();
+
+        // get a serial I/O provider from the Pi4J context
+        I2CProvider i2CProvider = pi4j.provider("pigpio-i2c");
+
+        // use try-with-resources to auto-close I2C when complete
+        try (var i2c = i2CProvider.create(configI2C);) {
+
+            // we will be reading and writing to register address 0x01
+            var register = i2c.register(0x01);
+
+
+            // <-- read a single (8-bit) byte value from the I2C device register
+            byte readByte = register.readByte();
+
+            console.println("I2C READ BYTE: 0x" + Integer.toHexString(Byte.toUnsignedInt(readByte)));
+
+            // <-- read a single (16-bit) word value from the I2C device register
+            int readWord = register.readWord();
+
+            console.println("I2C READ WORD: 0x" + Integer.toHexString(readWord));
+
+            // <-- read ByteBuffer of specified length from the I2C device register
+            ByteBuffer readBuffer = register.readByteBuffer(2);
+
+            console.println("I2C READ BUFFER: 0x" + StringUtil.toHexString(readBuffer));
+        }
     }
 }
