@@ -45,9 +45,8 @@ import java.nio.ByteBuffer;
  */
 public class MinimalExample {
 
-    private static final int SPI_CHANNEL = 0;
     private static final int I2C_BUS = 1;
-    private static final int I2C_DEVICE = 2;
+    private static final int I2C_DEVICE = 0x48;
 
     /**
      * This application blinks a led and counts the number the button is pressed. The blink speed increases with each
@@ -108,43 +107,6 @@ public class MinimalExample {
         PrintInfo.printRegistry(console, pi4j);
 
 
-        var config = Spi.newConfigBuilder(pi4j)
-                .id("my-spi-device")
-                .name("My SPI Device")
-                .address(SPI_CHANNEL)
-                .baud(Spi.DEFAULT_BAUD)
-                .build();
-
-        // get a SPI I/O provider from the Pi4J context
-        SpiProvider spiProvider = pi4j.provider("pigpio-spi");
-
-        // use try-with-resources to auto-close SPI when complete
-        try (var spi = spiProvider.create(config);) {
-
-
-            // open SPI communications
-            spi.open();
-
-            // write data to the SPI channel
-
-            // take a breath to allow time for the SPI
-            // data to get updated in the SPI device
-            Thread.sleep(100);
-
-            // read data back from the SPI channel
-            ByteBuffer buffer = spi.readByteBuffer(2);
-
-            console.println("--------------------------------------");
-            console.println("--------------------------------------");
-            console.println("SPI [READ] :");
-            console.println("  [BYTES]  0x" + StringUtil.toHexString(buffer.array()));
-            console.println("  [STRING] " + new String(buffer.array()));
-            console.println("--------------------------------------");
-            console.println(spi.read());
-            console.println("--------------------------------------");
-
-        }
-
         // create I2C config
         var configI2C = I2C.newConfigBuilder(pi4j)
                 .id("my-i2c-bus")
@@ -160,7 +122,7 @@ public class MinimalExample {
         try (var i2c = i2CProvider.create(configI2C);) {
 
             // we will be reading and writing to register address 0x01
-            var register = i2c.register(2);
+            var register = i2c.register(0x00);
 
 
             // <-- read a single (8-bit) byte value from the I2C device register
