@@ -30,8 +30,6 @@ package com.pi4j.example;
 import com.pi4j.Pi4J;
 import com.pi4j.io.i2c.I2C;
 import com.pi4j.io.i2c.I2CProvider;
-import com.pi4j.io.spi.Spi;
-import com.pi4j.io.spi.SpiProvider;
 import com.pi4j.util.Console;
 import com.pi4j.util.StringUtil;
 
@@ -122,7 +120,7 @@ public class MinimalExample {
         try (var i2c = i2CProvider.create(configI2C);) {
 
             // we will be reading and writing to register address 0x01
-            var register = i2c.register(0x00);
+            var register = i2c.register(0x01);
 
 
             // <-- read a single (8-bit) byte value from the I2C device register
