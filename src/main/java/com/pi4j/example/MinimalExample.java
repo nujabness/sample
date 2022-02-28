@@ -44,7 +44,7 @@ import java.nio.ByteBuffer;
 public class MinimalExample {
 
     private static final int I2C_BUS = 1;
-    private static final int I2C_DEVICE = 0x04;
+    private static final int I2C_DEVICE = 0x48;
 
     /**
      * This application blinks a led and counts the number the button is pressed. The blink speed increases with each
@@ -120,12 +120,12 @@ public class MinimalExample {
         try (var i2c = i2CProvider.create(configI2C);) {
 
             // we will be reading and writing to register address 0x01
-            var register = i2c.register(0x00);
+            var register = i2c.register(0x01);
 
             // <-- read a single (16-bit) word value from the I2C device register
-//            int readWord = register.readWord();
-//
-//            console.println("I2C READ WORD: 0x" + Integer.toHexString(readWord));
+            int readWord = register.readWord();
+
+            console.println("I2C READ WORD: 0x" + Integer.toHexString(readWord));
 
             // <-- read ByteBuffer of specified length from the I2C device register
             ByteBuffer readBuffer = register.readByteBuffer(2);
