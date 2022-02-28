@@ -123,15 +123,17 @@ public class MinimalExample {
             var register = i2c.register(0x02);
 
             while(true){
+                int readWord = register.readWord();
+                console.println("I2C READ WORD: 0x" + Integer.toHexString(readWord));
+
                 // <-- read ByteBuffer of specified length from the I2C device register
                 ByteBuffer readBuffer = register.readByteBuffer(2);
-
                 // Convert the data
                 int raw_adc = ((readBuffer.get(0) & 0xFF) * 256) + (readBuffer.get(1) & 0xFF);
-                if (raw_adc > 32767)
-                {
-                    raw_adc -= 65535;
-                }
+//                if (raw_adc > 32767)
+//                {
+//                    raw_adc -= 65535;
+//                }
 
                 System.out.printf("Digital Value of Analog Input : %d %n", raw_adc);
                 Thread.sleep(3000);
