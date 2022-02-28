@@ -128,7 +128,7 @@ public class MinimalExample {
 
                 // <-- read ByteBuffer of specified length from the I2C device register
                 ByteBuffer readBuffer = register.readByteBuffer(2);
-                console.println("I2C READ BYTE: " + readBuffer.toString());
+                console.println("I2C READ BYTE: " + readBuffer.getInt());
 
                 // Convert the data
                 int raw_adc = ((readBuffer.get(0) & 0xFF) * 256) + (readBuffer.get(1) & 0xFF);
