@@ -120,24 +120,18 @@ public class MinimalExample {
         try (var i2c = i2CProvider.create(configI2C);) {
 
             // we will be reading and writing to register address 0x01
-            var register0 = i2c.register(0x00);
-            var register1 = i2c.register(0x01);
+            var register = i2c.register(0x01);
 
-            // <-- read a single (16-bit) word value from the I2C device register
-            int readWord0 = register0.readWord();
-            int readWord1 = register1.readWord();
-
-            while(true){
-                readWord0 = register0.readWord();
-                console.println("I2C READ WORD 000: " + readWord0);
-                console.println("I2C READ WORD 000: 0x " + Integer.toHexString(readWord0));
-
-                readWord1 = register1.readWord();
-                console.println("I2C READ WORD 111 : " + readWord1);
-                console.println("I2C READ WORD:111 0x " + Integer.toHexString(readWord1));
-                Thread.sleep(3000);
+            // <-- read ByteBuffer of specified length from the I2C device register
+            ByteBuffer readBuffer = register.readByteBuffer(2);
+            // Convert the data
+            int raw_adc = ((readBuffer.get(0) & 0xFF) * 256) + (readBuffer.get(1) & 0xFF);
+            if (raw_adc > 32767)
+            {
+                raw_adc -= 65535;
             }
 
+            console.println("I2C READ BUFFER: " + raw_adc);
         }
     }
 }
