@@ -123,9 +123,9 @@ public class MinimalExample {
             var register = i2c.register(0x00);
 
             // <-- read a single (16-bit) word value from the I2C device register
-            int readWord = register.readWord();
-
-            console.println("I2C READ WORD: 0x" + Integer.toHexString(readWord));
+//            int readWord = register.readWord();
+//
+//            console.println("I2C READ WORD: 0x" + Integer.toHexString(readWord));
 
             // <-- read ByteBuffer of specified length from the I2C device register
             ByteBuffer readBuffer = register.readByteBuffer(2);
