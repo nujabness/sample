@@ -134,6 +134,7 @@ public class MinimalExample {
                 }
 
                 System.out.printf("Digital Value of Analog Input : %d %n", raw_adc);
+                Thread.sleep(3000);
             }
         }
     }
