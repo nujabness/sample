@@ -120,7 +120,7 @@ public class MinimalExample {
         try (var i2c = i2CProvider.create(configI2C);) {
 
             // we will be reading and writing to register address 0x01
-            var register = i2c.register(0x00);
+            var register = i2c.register(0x01);
 
             while(true){
                 int readWord = register.readWord();
