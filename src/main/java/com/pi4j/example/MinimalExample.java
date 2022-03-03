@@ -105,11 +105,11 @@ public class MinimalExample {
         PrintInfo.printRegistry(console, pi4j);
 
         var output = pi4j.dout().create(DIGITAL_OUTPUT_PIN);
-        output.config().shutdownState(DigitalState.HIGH);
+        output.config().shutdownState(DigitalState.LOW);
         output.addListener(System.out::println);
-        output.low();
-        Thread.sleep(5000);
         output.high();
+        Thread.sleep(5000);
+        output.low();
 
         // create I2C config
 //        var configI2C = I2C.newConfigBuilder(pi4j)
