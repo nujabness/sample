@@ -42,7 +42,7 @@ public class MinimalExample {
 
     private static final int I2C_BUS = 1;
     private static final int I2C_DEVICE = 0x48;
-    private static final int DIGITAL_OUTPUT_PIN = 23;
+    private static final int DIGITAL_OUTPUT_PIN = 4;
 
 
 
