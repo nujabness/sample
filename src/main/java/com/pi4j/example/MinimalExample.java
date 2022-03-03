@@ -42,7 +42,7 @@ public class MinimalExample {
 
     private static final int I2C_BUS = 1;
     private static final int I2C_DEVICE = 0x48;
-    private static final int DIGITAL_OUTPUT_PIN = 7;
+    private static final int DIGITAL_OUTPUT_PIN = 4;
 
 
 
@@ -105,11 +105,11 @@ public class MinimalExample {
         PrintInfo.printRegistry(console, pi4j);
 
         var output = pi4j.dout().create(DIGITAL_OUTPUT_PIN);
-        output.config().shutdownState(DigitalState.LOW);
+        output.config().shutdownState(DigitalState.HIGH);
         output.addListener(System.out::println);
-        output.high();
-        Thread.sleep(5000);
         output.low();
+        Thread.sleep(5000);
+        output.high();
 
         // create I2C config
 //        var configI2C = I2C.newConfigBuilder(pi4j)
