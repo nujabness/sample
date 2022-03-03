@@ -107,9 +107,9 @@ public class MinimalExample {
         var output = pi4j.dout().create(DIGITAL_OUTPUT_PIN);
         output.config().shutdownState(DigitalState.LOW);
         output.addListener(System.out::println);
-        output.high();
+        output.toggle();
         Thread.sleep(5000);
-        output.low();
+        output.toggle();
 
         // create I2C config
 //        var configI2C = I2C.newConfigBuilder(pi4j)
