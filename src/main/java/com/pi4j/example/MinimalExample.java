@@ -105,7 +105,7 @@ public class MinimalExample {
         PrintInfo.printRegistry(console, pi4j);
 
         var output = pi4j.dout().create(DIGITAL_OUTPUT_PIN);
-        output.config().shutdownState(DigitalState.HIGH);
+        output.config().shutdownState(DigitalState.LOW);
         output.addListener(System.out::println);
         output.high();
         Thread.sleep(2000);
