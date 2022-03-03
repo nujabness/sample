@@ -28,12 +28,9 @@ package com.pi4j.example;
  */
 
 import com.pi4j.Pi4J;
-import com.pi4j.io.i2c.I2C;
-import com.pi4j.io.i2c.I2CProvider;
+import com.pi4j.io.gpio.digital.*;
 import com.pi4j.util.Console;
-import com.pi4j.util.StringUtil;
 
-import java.nio.ByteBuffer;
 
 /**
  * <p>This example fully describes the base usage of Pi4J by providing extensive comments in each step.</p>
@@ -45,6 +42,9 @@ public class MinimalExample {
 
     private static final int I2C_BUS = 1;
     private static final int I2C_DEVICE = 0x48;
+    private static final int DIGITAL_OUTPUT_PIN = 23;
+
+
 
     /**
      * This application blinks a led and counts the number the button is pressed. The blink speed increases with each
@@ -104,41 +104,48 @@ public class MinimalExample {
         // OPTIONAL: print the registry
         PrintInfo.printRegistry(console, pi4j);
 
+        var output = pi4j.dout().create(DIGITAL_OUTPUT_PIN);
+        output.config().shutdownState(DigitalState.HIGH);
+        output.addListener(System.out::println);
+        output.high();
+        Thread.sleep(2000);
+        output.low();
 
         // create I2C config
-        var configI2C = I2C.newConfigBuilder(pi4j)
-                .id("my-i2c-bus")
-                .name("My I2C Bus")
-                .bus(I2C_BUS)
-                .device(I2C_DEVICE)
-                .build();
+//        var configI2C = I2C.newConfigBuilder(pi4j)
+//                .id("my-i2c-bus")
+//                .name("My I2C Bus")
+//                .bus(I2C_BUS)
+//                .device(I2C_DEVICE)
+//                .build();
 
         // get a serial I/O provider from the Pi4J context
-        I2CProvider i2CProvider = pi4j.provider("pigpio-i2c");
+//        I2CProvider i2CProvider = pi4j.provider("pigpio-i2c");
 
         // use try-with-resources to auto-close I2C when complete
-        try (var i2c = i2CProvider.create(configI2C);) {
-
-            // we will be reading and writing to register address 0x01
-            var register = i2c.register(0x01);
-
-            while(true){
-                int readWord = register.readWord();
-                console.println("I2C READ WORD: " + readWord);
-
-                // <-- read ByteBuffer of specified length from the I2C device register
-                ByteBuffer readBuffer = register.readByteBuffer(2);
-
-                // Convert the data
-                int raw_adc = ((readBuffer.get(0) & 0xFF) * 256) + (readBuffer.get(1) & 0xFF);
-//                if (raw_adc > 32767)
-//                {
-//                    raw_adc -= 65535;
-//                }
-
-                System.out.printf("Digital Value of Analog Input : %d %n", raw_adc);
-                Thread.sleep(3000);
-            }
-        }
+//        try (var i2c = i2CProvider.create(configI2C);) {
+//
+//            byte[] config = {(byte)0xC4, (byte)0x83};
+//            // we will be reading and writing to register address 0x01
+//            var register = i2c.register(0x00);
+//
+//            while(true){
+//                int readWord = register.readWord();
+//                console.println("I2C READ WORD: " + readWord);
+//
+//                // <-- read ByteBuffer of specified length from the I2C device register
+//                ByteBuffer readBuffer = register.readByteBuffer(2);
+//
+//                // Convert the data
+//                int raw_adc = ((readBuffer.get(0) & 0xFF) * 256) + (readBuffer.get(1) & 0xFF);
+////                if (raw_adc > 32767)
+////                {
+////                    raw_adc -= 65535;
+////                }
+//
+//                System.out.printf("Digital Value of Analog Input : %d %n", raw_adc);
+//                Thread.sleep(3000);
+//            }
+//        }
     }
 }
