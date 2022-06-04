@@ -18,6 +18,7 @@ import com.pi4j.util.Console;
  *     <li>Registry (I/O Registry)</li>
  * </ul>
  */
+
 public class PrintInfo {
 
     /**
